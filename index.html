@@ -10,23 +10,38 @@
 </head>
 
 <body onload="onInIt()">
-    <div class="gallery">
-        
+    <header class="main-header">
+        <nav class="main-nav flex space-between align-center ">
+            <div class="logo"><img src="img/LOGO/LOGO.png"></div>
+            <ul class="main-links flex clean-list">
+                <li class="flex"><a href="#">Gallery</a></li>
+                <li class="flex"><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="main-layout gallery">
     </div>
-    <section class="editor-meme">
-        <form onsubmit="onSubmit(event)">
-            <input onkeyup="inputText(event)" type="text" >
-        </form>
-    </section>
-    <section class="gallery-meme">
-        <div class="canvas-container">
-            <canvas width="400" height="400"></canvas>
-        </div>
-    </section>
-    <script src="js/storage.mame.js"></script>
-    <script src="js/galleryController.mame.js"></script>
-    <script src="js/service.meme.js"></script>
-    <script src="js/controller.meme.js"></script>
-</body>
+    <div class="meme">
 
-</html>
+        <section class="editor-meme">
+            <form onsubmit="onSubmit(event)">
+                <input class="txet-input" onkeyup="inputText(event)" type="text" >
+            </form>
+            <input class="color-input" type="color">
+            <button onclick="onIncrease()" class="btn-increase"><img src="img/icons/increase_font_-_icon.png"></button>
+            <button onclick="onDecrease()" class="btn-decrease"><img src="img/icons/decrease_font_-_icon (1).png"></button>
+            <button onclick="onAddLine()" class="btn-add-line"><img src="img/icons/add.png"></button>
+        </section>
+        <section class="gallery-meme">
+            <div class="canvas-container">
+                <canvas width="400" height="400"></canvas>
+            </div>
+        </section>
+    </div>
+        <script src="js/storage.mame.js"></script>
+        <script src="js/galleryController.mame.js"></script>
+        <script src="js/service.meme.js"></script>
+        <script src="js/controller.meme.js"></script>
+    </body>
+    
+    </html>

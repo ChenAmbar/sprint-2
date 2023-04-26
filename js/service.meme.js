@@ -1,11 +1,8 @@
 'use strict'
 
 let gKeywordSearchCountMap = { 'funny': 12, 'cat': 16, 'baby': 2 }
-let gImgs = [
-    { id: 1, url: 'img/1.jpg', keywords: ['funny', 'cat'] },
-    { id: 2, url: 'img/2.jpg', keywords: ['funny', 'cat'] }
-];
 
+let gImgs 
 let gMeme = {
     selectedImgId: 'img/1.jpg',
     selectedLineIdx: 0,
@@ -14,10 +11,32 @@ let gMeme = {
             txt:'',
             size: 30,
             align: 'center',
-            color: 'blue'
+            color:'blue'
+        },
+        {
+            txt:'',
+            size: 30,
+            align: 'center',
+            color:'blue'
+        },
+        {
+            txt:'',
+            size: 30,
+            align: 'center',
+            color:'blue'
         }
     ]
 }
+
+_createImgs()
+function _createImgs(){
+    let imgs=[]
+    for (let i = 1; i <= 18; i++) {
+        imgs.push({ id: i, url: `img/${i}.jpg`, keywords: [] })
+    }
+    gImgs=imgs
+}
+
 
 function getMeme() {
     return gMeme

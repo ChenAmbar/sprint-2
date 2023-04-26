@@ -2,7 +2,7 @@
 
 function renderGallery() {
     let strHTML=''
-    for(let i=1 ; i<3 ;i++){
+    for(let i=1 ; i<=18 ;i++){
       strHTML+= ` <img onclick="onImgSelect(${i})" src="img/${i}.jpg">`
     }
     
@@ -10,8 +10,13 @@ function renderGallery() {
     elGallery.innerHTML=strHTML
 }
 
-function onImgSelect(i){
-    getImg(i)
+function onImgSelect(id){
+    getImg(id)
+    hideGallery()
+    showMeme()
     renderMeme()
-console.log(i);
+
+}
+function hideGallery() {
+    document.querySelector('.gallery').style.display="none"
 }
