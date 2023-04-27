@@ -1,6 +1,19 @@
 body {
     text-align: center;
 }
+.my-memes{
+    display: grid;
+    grid-template-columns:
+    minmax(auto,300px) 
+    minmax(auto,300px)
+    minmax(auto,300px);
+    justify-content: center;
+    gap: 5px;
+    margin-top: 15px;
+}
+.my-memes img{
+    width: 100%;
+}
 .main-layout {
     display: grid;
     grid-template-columns:
@@ -20,6 +33,7 @@ body {
     margin-top: 15px;
     
 }
+
 .editor-meme{
     display: grid;
     grid-template-rows: minmax(auto,140px) minmax(auto,120px) minmax(auto,50px);
@@ -38,6 +52,10 @@ canvas {
     margin: auto;
     background-color: white;
     border: 1px solid black;
+    width: 100%;
+}
+.my-memes{
+    display: none;
 }
 .text-input{
     width: 281px;
@@ -48,13 +66,6 @@ canvas {
     width: 100%;
     height: 100%;
     border: 1px solid black;
-}
-.main-header {
-    color: #ffffff;
-    background-color: #292929;
-}
-.main-links {
-    gap: 0px;
 }
 .color-input{
     width: 40px;
@@ -74,15 +85,17 @@ li{
 .flex.align-center{
     align-items: center;
 }
-.logo{
-    margin: 0px 20px;
-}
+
 .clean-list {
-margin: 0;
-padding: 0;
-list-style-type: none;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
+
+.logo img{
+    width: 160px;
+}
 .main-links a{
     color: inherit;
     text-decoration: none;
@@ -95,6 +108,7 @@ list-style-type: none;
 
 .logo {
     font-size: 2.5rem;
+    margin: 0px 20px;
 }
 
 .main-header li{
@@ -109,14 +123,66 @@ list-style-type: none;
     box-shadow: 0px -4px orange inset;
 }
 
-.logo img{
-    width: 160px;
+.main-header {
+    color: #ffffff;
+    background-color: #292929;
 }
-@media (min-width: 500px){
-   
-   
- 
+.btn-menu{
+    display: none;
 }
+@media(max-width:800px){
+    
+    .meme-layout{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 15px;
+        
+    }
+    .canvas{
+        width: 100%;
+    }
+    .btn-menu{
+        display: inline-block;
+        height: 110px;
+        background-color: #292929;
+        width: 85px;
+        color: #ffffff;
+    }
+    .btn-menu:hover{
+        color:orange;
+        box-shadow: 0px -4px orange inset;
+    }
+    .main-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-inline-start: 1px solid #ccc;
+        min-width: 160px;
+        color: #ffffff;
+        background-color: #292929;
+    
+        
+        transform: translateX(100%);
+        flex-direction: column;
+    
+        transition: transform 0.6s, box-shadow 0.6s;
+    }
+    li {
+        width: 157px;
+    }
+    .main-nav > li {
+        border-bottom: 1px solid #ccc;
+    }
+    body.menu-open .main-links {
+        transform: translateX(0);
+        box-shadow: -1px 1px 20px rgb(0 0 0 / 50%);
+    }
+}
+
 @media (min-width: 800px){
     .main-layout {
         display: grid;
@@ -127,6 +193,11 @@ list-style-type: none;
         gap: 5px;
         margin-top: 15px;
     }
+    .main-links{
+        position:static;
+
+    }
+  
     
 }
 @media (min-width: 1100px){

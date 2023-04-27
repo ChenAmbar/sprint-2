@@ -12,11 +12,13 @@
 <body onload="onInIt()">
     <header class="main-header">
         <nav class="main-nav flex space-between align-center ">
-            <div class="logo"><img src="img/LOGO/LOGO.png"></div>
+            <div onclick="onGalleryPage()" class="logo"><img src="img/LOGO/LOGO.png"></div>
             <ul class="main-links flex clean-list">
-                <li class="flex"><a href="#">Gallery</a></li>
+                <li onclick="onGalleryPage()" class="flex"><a href="#">Gallery</a></li>
                 <li class="flex"><a href="#">About</a></li>
+                <li onclick="onMyMemesPage()" class="flex"><a href="#">My Memes</a></li>
             </ul>
+            <button class="btn-menu" onclick="toggleMenu()">☰</button>
         </nav>
     </header>
     <div class="main-layout gallery">
@@ -59,9 +61,21 @@
                 </div>
                 <div class="color">
                     <input class="color-input" type="color"><img src="img/icons/paint-board-and-brush.png">
+                    <select onclick="onImpact()" class="impact">
+                        <option value="">IMPACT</option>
+                        <option value="cursive">cursive</option>
+                        <option value="monospace">monospace</option>
+                        <option value="sans-serif">sans-serif</option>
+                    </select>
+                </div>
+                <div class="upload-meme">
+                    <button onclick="onSaveMeme()" class="save">Save</button>
                 </div>
             </section>
         </section>
+    </div>
+    <div class="my-memes">
+        
     </div>
     <script src="js/storage.mame.js"></script>
     <script src="js/galleryController.mame.js"></script>

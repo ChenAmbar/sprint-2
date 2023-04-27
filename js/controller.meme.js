@@ -1,11 +1,11 @@
 'use strict'
 const STORAGE_KEY = 'memeDB'
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
-
 let gElCanvas
 let gCtx
 let gStartPos
 let gIsDrag = false
+// let gMemesImg=[]
 
 let gPositions = [{ x: 300, y: 40 }, { x: 300, y: 560 }, { x: 300, y: 300 }]
 
@@ -13,13 +13,23 @@ let gPositions = [{ x: 300, y: 40 }, { x: 300, y: 560 }, { x: 300, y: 300 }]
 function onInIt() {
     gElCanvas = document.querySelector('canvas')
     gCtx = gElCanvas.getContext('2d')
-
+    getSaveMeme()
     resizeCanvas()
     renderGallery()
     renderMeme()
     hidenMeme()
     addListeners()
     
+}
+function onSaveMeme(){
+    const imgContent = gElCanvas.toDataURL('image/jpeg') 
+    const meme=getMeme()
+    gMemes.push([imgContent,{meme}])
+    _saveToStorage(gMemes)
+}
+function onGalleryPage(){
+    hidenMeme()
+    showGallery()
 }
 function onInputEmoji() {
     const elEmoji = document.querySelector('.emoji').value
@@ -30,6 +40,14 @@ function onInputEmoji() {
     renderMeme()
     document.querySelector('.emoji').value=''
     
+}
+function onImpact(){
+    const elInpact=document.querySelector('.impact').value
+    setImpact(elInpact)
+    renderMeme()
+}
+function toggleMenu() {
+    document.body.classList.toggle('menu-open');
 }
 function addListeners() {
     addMouseListeners()
@@ -141,13 +159,13 @@ function onDecrease() {
     renderMeme()
 
 }
-function drawText(text, x, y, size, align, color) {
+function drawText(text, x, y, size, align, color,font) {
     const meme = getMeme()
     const lineIdx = meme.selectedLineIdx
     gCtx.lineWidth = 1
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = color
-    gCtx.font = size + 'px Arial'
+    gCtx.font = `${size}px ${font}`
     gCtx.textAlign = align
     gCtx.textBaseline = 'middle'
     gCtx.fillText(text, x, y)
@@ -176,9 +194,9 @@ function drawImg() {
         lines.forEach((line, idx) => {
 
             const positions = gPositions[idx]
-            const { txt, size, align, color } = line
+            const { txt, size, align, color,font } = line
 
-            drawText(txt, positions.x, positions.y, size, align, color)
+            drawText(txt, positions.x, positions.y, size, align, color,font)
         })
     }
     inputColorText()
@@ -212,7 +230,7 @@ function onSubmit(ev) {
     document.querySelector('input').value = ''
 }
 
-function _saveToStorage() {
-    saveToStorage(STORAGE_KEY, gMeme)
+function _saveToStorage(val) {
+    saveToStorage(STORAGE_KEY, val)
 
 }
