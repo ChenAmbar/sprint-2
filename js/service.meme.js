@@ -9,19 +9,19 @@ let gMeme = {
     lines: [
         {
             txt:'',
-            size: 30,
+            size: 40,
+            align: 'center',
+            color:'blue',
+        },
+        {
+            txt:'',
+            size: 40,
             align: 'center',
             color:'blue'
         },
         {
             txt:'',
-            size: 30,
-            align: 'center',
-            color:'blue'
-        },
-        {
-            txt:'',
-            size: 30,
+            size: 40,
             align: 'center',
             color:'blue'
         }
@@ -37,6 +37,13 @@ function _createImgs(){
     gImgs=imgs
 }
 
+function moveText(dx, dy) {
+    const {selectedLineIdx}=getMeme()
+
+    gPositions[selectedLineIdx].x += dx
+    gPositions[selectedLineIdx].y += dy
+  }
+
 
 function getMeme() {
     return gMeme
@@ -49,5 +56,9 @@ function getImg(id) {
 
 function setLineTxt(text){
     gMeme.lines[gMeme.selectedLineIdx].txt=text
+    console.log(gMeme);
+}
+function setEmoji(text){
+    gMeme.lines[gMeme.selectedLineIdx].txt+=text
     console.log(gMeme);
 }
