@@ -1,0 +1,16 @@
+
+body {
+    text-align: center;
+    background-color: #292929;
+}
+
+button{
+    border-radius: 10px;
+}
+
+select{
+    border-radius: 6px;
+}
+input{
+    border-radius: 8px;
+}

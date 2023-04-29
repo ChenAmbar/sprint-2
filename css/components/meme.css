@@ -1,0 +1,85 @@
+.editor-meme{
+    display: grid;
+    grid-template-rows: minmax(auto,140px) minmax(auto,75px) minmax(auto,50px);
+    justify-content: center;
+    gap: 5px;
+    margin-top: 15px;
+    background-color: #3a3a3a;
+    border-radius: 20px;
+    margin: 0;
+}
+
+
+.file-input{
+    display: none;
+}
+
+.text-input{
+    width: 281px;
+    height: 30px;
+}
+select.emoji{
+    height: 30px;
+}
+canvas {
+    display: block;
+    margin: auto;
+    background-color: white;
+    /* border: 1px solid black; */
+    width: 100%;
+    height: 100%;
+    margin-bottom: 10px;
+}
+.canvas-container {
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+.color-input{
+    display: none;
+}
+.btn-delete-line{
+    background-color: #f93434;
+}
+.btn-up-down-text{
+    background-color: #3c3ce7;
+}
+.btn-add-line{
+    background-color: #2de02d;
+}
+.buttons-down{
+    padding: 4px;
+    background-color: #f4752b;
+    border-radius: 15px;
+    height: 34px;
+}
+
+.buttons-down button {
+    border: none;
+    background-color: #5e5e5e;
+    border-radius: 5px;
+
+}
+.color{
+    margin-top: -3px;
+    margin-bottom: 15px;
+}
+
+.editor-meme h2{
+    color: #f4752b;
+    font-family: cursive;
+}
+
+.upload-meme{
+    align-self: end;
+    margin-bottom: 20px;
+}
+
+.upload-meme button{
+    width: 80px;
+    height: 40px;
+}
+
+.buttons-down img{
+    width: 30px;
+}

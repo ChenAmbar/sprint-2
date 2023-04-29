@@ -10,6 +10,8 @@
 </head>
 
 <body onload="onInIt()">
+    <div class="main-screen" onclick="toggleMenu()"></div>
+
     <header class="main-header">
         <nav class="main-nav flex space-between align-center ">
             <div onclick="onGalleryPage()" class="logo"><img src="img/LOGO/LOGO.png"></div>
@@ -21,7 +23,18 @@
             <button class="btn-menu" onclick="toggleMenu()">☰</button>
         </nav>
     </header>
+    <section class="main-search">
+        <div class="search flex space-between">
+            <form onsubmit="onSubmit(event)">
+                <h2>Search Image:</h2>
+                <input class="search-input" onkeyup="inputSearch(event)" type="text">
+                <button onclick="onInputSearch()" class="btn-search">🔎</button>
+            </form>
+            <div class="key-words"></div>
+        </div>
+    </section>
     <div class="main-layout gallery">
+
     </div>
     <div class="gallery-meme">
 
@@ -49,18 +62,21 @@
                 <div class="buttons-down">
 
                     <button onclick="onIncrease()" class="btn-increase"><img
-                            src="img/icons/increase_font_-_icon.png"></button>
+                            src="img/icons/icons8-increase-font-30.png"></button>
                     <button onclick="onDecrease()" class="btn-decrease"><img
-                            src="img/icons/decrease_font_-_icon (1).png"></button>
+                            src="img/icons/icons8-decrease-font-30.png"></button>
                     <button onclick="onAlingLeftLine()" class="btn-align-to-left"><img
-                            src="img/icons/align-to-left.png"></button>
+                            src="img/icons/icons8-align-left-50.png"></button>
                     <button onclick="onAlingRightLine()" class="btn-align-to-right"><img
-                            src="img/icons/align-to-right.png"></button>
+                            src="img/icons/icons8-align-right-50.png"></button>
                     <button onclick="onCenterTextLine()" class="btn-center-text"><img
-                            src="img/icons/center-text-alignment.png"></button>
+                            src="img/icons/icons8-align-center-50.png"></button>
                 </div>
                 <div class="color">
-                    <input class="color-input" type="color"><img src="img/icons/paint-board-and-brush.png">
+                    <input id="color" onclick="inputColorText()" class="color-input" type="color">
+                    <label for="color">
+                        <img src="img/icons/icons8-artist-palette-48.png">
+                    </label>
                     <select onclick="onImpact()" class="impact">
                         <option value="">IMPACT</option>
                         <option value="cursive">cursive</option>
@@ -68,17 +84,24 @@
                         <option value="sans-serif">sans-serif</option>
                     </select>
                 </div>
-                <div class="upload-meme">
-                    <button onclick="onSaveMeme()" class="save">Save</button>
+                <div class="upload-meme flex space-between">
+                    <span onclick="onSaveMeme()" class="save"><img src="img/icons/icons8-save-48.png"></span>
+                        <a href="#" class="download" onclick="downloadImg(this)" download="my-img.jpg"><img src="img/icons/icons8-download-48.png"></a>
+                    <input type="file" id="file" class="file-input btn" name="image" onchange="onImgInput(event)" />
+
+                    <label for="file"><img src="img/icons/icons8-add-image-48.png"></label>
+
+
                 </div>
             </section>
         </section>
     </div>
     <div class="my-memes">
-        
+
     </div>
     <script src="js/storage.mame.js"></script>
-    <script src="js/galleryController.mame.js"></script>
+    <script src="js/service.gallery.js"></script>
+    <script src="js/controller.gallery.js"></script>
     <script src="js/service.meme.js"></script>
     <script src="js/controller.meme.js"></script>
 </body>

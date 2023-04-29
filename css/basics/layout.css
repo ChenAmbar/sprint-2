@@ -1,0 +1,18 @@
+
+.main-layout {
+    display: grid;
+    grid-template-columns:
+    minmax(auto,300px)
+    minmax(auto,300px);
+    justify-content: center;
+    gap: 10px;
+    margin-top: -25px;
+    width: 97%;
+    padding: 10px;
+}
+
+.meme-layout{
+    width: 95vw;
+    margin: auto;
+    
+}
