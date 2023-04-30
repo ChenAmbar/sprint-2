@@ -68,6 +68,10 @@
     li{
         width: 100px;
     }
+    .canvas-container {
+        margin: auto;
+        width: 350px;
+    }
   
  
    
@@ -78,6 +82,7 @@
         display: grid;
         grid-template-columns:
         minmax(auto,300px) 
+        minmax(auto,300px)
         minmax(auto,300px)
         minmax(auto,300px);
         justify-content: center;
@@ -92,14 +97,18 @@
     .meme-layout{
         display: grid;
         grid-template-columns:
-        minmax(auto,1fr)
-        minmax(auto,1fr);
+        minmax(auto,400px)
+        minmax(auto,400px);
         justify-content: center;
         gap: 30px;
         margin-top: 15px;
         width: 95vw;
         margin: auto;
         
+    }
+    .canvas-container {
+        margin: auto;
+        width: 100%;
     }
 
 }

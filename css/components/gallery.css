@@ -1,7 +1,8 @@
-.key-words{
+.key-words {
     align-self: center;
 }
-.gallery{
+
+.gallery {
     border-radius: 15px;
     margin-top: 0;
     gap: 10px;
@@ -13,8 +14,12 @@
     margin-top: 35px;
 }
 
-.gallery img{
+.gallery img {
     width: 100%;
     height: 100%;
     border-radius: 20px;
+}
+
+.gallery img:hover {
+    opacity: 0.4;
 }

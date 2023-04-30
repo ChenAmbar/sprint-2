@@ -1,6 +1,6 @@
 'use strict'
 let gImgs
-let gKeywordSearchCountMap = { 'all':50,'men':25,'funny':32, 'cat': 46, 'baby': 18 }
+let gKeywordSearchCountMap = { 'all':28,'men':22,'funny':20, 'cat': 30, 'baby': 18 }
 
 _createImgs()
 function _createImgs() {
@@ -32,10 +32,19 @@ function _createImgs() {
 function getKeyWords(){
     return gKeywordSearchCountMap
 }
+function clearText(){
+    gMeme.lines[gMeme.selectedLineIdx].txt=''
+}
+
+function selectKey(key){
+    const keysWords= getKeyWords()
+    gSearchInput = key.target.innerHTML
+    keysWords[gSearchInput]++
+    if (gSearchInput === 'all') gSearchInput = ''
+}
 
 function getImgs(){
     const imgs=gImgs.filter(img=>{
-        console.log(img.keywords.join().toLowerCase());
         return img.keywords.join().toLowerCase().includes(gSearchInput)
     })
     return imgs
@@ -44,21 +53,4 @@ function getImgs(){
 function getImg(id) {
     const img = gImgs.find(img => img.id === id)
     gMeme.selectedImgId = img.url
-}
-
-function hideSerch(){
-    document.querySelector('.search').style.display='none'
-}
-function showSearch(){
-    document.querySelector('.search').style.display='flex'
-}
-
-function hideGallery() {
-    document.querySelector('.gallery').style.display = "none"
-    hideSerch()
-
-}
-function showGallery() {
-    document.querySelector('.gallery').style.display = "grid"
-    showSearch()
 }

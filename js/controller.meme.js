@@ -5,32 +5,33 @@ let gElCanvas
 let gCtx
 let gStartPos
 let gIsDrag = false
-let gPositions
 
 function renderMeme() {
     drawImg()
+}
+function deawBorderLine(x, y) {
+    if (!gIsSave) return
+    const { lines, selectedLineIdx } = getMeme()
+    const size = lines[selectedLineIdx].size
+    gCtx.strokeStyle = 'black'
+    gCtx.strokeRect(5, y - (size - 10), gElCanvas.width - 10, 1.5 * size)
 }
 function drawImg() {
     const { selectedImgId, selectedLineIdx, lines } = getMeme()
     const elImg = new Image()
     elImg.src = selectedImgId
     elImg.onload = () => {
-        
         gCtx.drawImage(elImg, 0, 0, gElCanvas.width, gElCanvas.height)
         lines.forEach((line, idx) => {
-            
             const positions = gPositions[idx]
-            const { txt, size, align, color,font } = line
-            
-            drawText(txt, positions.x, positions.y, size, align, color,font)
+            const { txt, size, align, color, font } = line
+            drawText(txt, positions.x, positions.y, size, align, color, font)
         })
+        deawBorderLine(gPositions[selectedLineIdx].x, gPositions[selectedLineIdx].y)
     }
-    
 }
 
-function drawText(text, x, y, size, align, color,font) {
-    const meme = getMeme()
-    const lineIdx = meme.selectedLineIdx
+function drawText(text, x, y, size, align, color, font) {
     gCtx.lineWidth = 1
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = color
@@ -39,49 +40,50 @@ function drawText(text, x, y, size, align, color,font) {
     gCtx.textBaseline = 'middle'
     gCtx.fillText(text, x, y)
     gCtx.strokeText(text, x, y)
-
 }
 
 function onImgInput(ev) {
     loadImageFromInput(ev, renderMeme)
 }
 
-function downloadImg(elLink) {
+function onDownloadImg(elLink) {
     const imgContent = gElCanvas.toDataURL('image/jpeg')
-    elLink.href = imgContent
+    downloadImg(elLink, imgContent)
 }
 
-function onSaveMeme(){
-    const imgContent = gElCanvas.toDataURL('image/jpeg') 
-    const meme=getMeme()
-    gMemes.push([imgContent,{meme}])
-    _saveToStorage(gMemes)
+function onSaveMeme() {
+    gIsSave = false
+    renderMeme()
+    setTimeout(() => {
+        saveMeme()
+        gIsSave = true
+    }, 10);
 }
 
 function onInputEmoji() {
     const elEmoji = document.querySelector('.emoji').value
-    console.log(elEmoji);
     setEmoji(elEmoji)
     const { lines, selectedLineIdx } = getMeme()
     document.querySelector('input').value = lines[selectedLineIdx].txt
     renderMeme()
-    document.querySelector('.emoji').value=''
-    
+    document.querySelector('.emoji').value = ''
 }
-function onImpact(){
-    const elInpact=document.querySelector('.impact').value
+
+function onImpact() {
+    const elInpact = document.querySelector('.impact').value
     setImpact(elInpact)
     renderMeme()
 }
+
 function toggleMenu() {
     document.body.classList.toggle('menu-open');
 }
+
 function addListeners() {
     addMouseListeners()
     addTouchListeners()
     window.addEventListener('resize', () => {
-        // onInIt()
-        gPositions= [{ x: gElCanvas.width/2, y: 40 }, { x: gElCanvas.width/2, y: gElCanvas.height-40 }, { x: gElCanvas.width/2, y: gElCanvas.height/2 }]
+        gPositions = [{ x: gElCanvas.width / 2, y: 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height - 40 }, { x: gElCanvas.width / 2, y: gElCanvas.height / 2 }]
     })
 }
 
@@ -96,12 +98,33 @@ function addTouchListeners() {
     gElCanvas.addEventListener('touchmove', onMove)
     gElCanvas.addEventListener('touchend', onUp)
 }
+
 function onDown(ev) {
-    gIsDrag = true
     const pos = getEvPos(ev)
     gStartPos = pos
-
+    if (isLineClicked(pos)) {
+        gIsDrag = true
+    }
+    lineClicked(pos)
 }
+
+function lineClicked(pos) {
+    const yClick = pos.y
+    const yLine1 = gPositions[0].y
+    const yLine2 = gPositions[1].y
+    const yLine3 = gPositions[2].y
+    if (yClick < yLine1 + 20 && yClick > yLine1 - 20) {
+        gMeme.selectedLineIdx = 0
+    }
+    if (yClick < yLine2 + 20 && yClick > yLine2 - 20) {
+        gMeme.selectedLineIdx = 1
+    }
+    if (yClick < yLine3 + 20 && yClick > yLine3 - 20) {
+        gMeme.selectedLineIdx = 2
+    }
+    renderMeme()
+}
+
 function onMove(ev) {
     if (!gIsDrag) return
     const pos = getEvPos(ev)
@@ -131,31 +154,22 @@ function getEvPos(ev) {
     }
     return pos
 }
+
 function onAlingRightLine() {
-    const { selectedLineIdx, lines } = getMeme()
-    lines[selectedLineIdx].align = "right"
-    gPositions[selectedLineIdx].x = gElCanvas.width-10
-
+    setAlingRightLine()
     renderMeme()
-
 }
+
 function onCenterTextLine() {
-    const { selectedLineIdx, lines } = getMeme()
-    lines[selectedLineIdx].align = "center"
-    gPositions.forEach(pos => {
-        gPositions[selectedLineIdx].x = gElCanvas.width/2
-    })
+    centerTextLine()
     renderMeme()
+}
 
-}
 function onAlingLeftLine() {
-    const { selectedLineIdx, lines } = getMeme()
-    lines[selectedLineIdx].align = "left"
-    gPositions.forEach(pos => {
-        gPositions[selectedLineIdx].x = 10
-    })
+    alingLeftLine()
     renderMeme()
 }
+
 function hidenMeme() {
     document.querySelector('.gallery-meme').style.display = 'none'
 }
@@ -164,41 +178,32 @@ function showMeme() {
 }
 
 function inputColorText() {
-    const { selectedLineIdx, lines } = getMeme()
     const colorInput = document.querySelector('.color-input').value
-    console.log(colorInput);
-    lines[selectedLineIdx].color = colorInput
+    setColorText(colorInput)
     renderMeme()
 }
+
 function onIncrease() {
-    const meme = getMeme()
-    const lineIdx = meme.selectedLineIdx
-    if (meme.lines[lineIdx].size > 90) return
-    meme.lines[lineIdx].size += 5
+    setIncrease()
     renderMeme()
 }
 
 function onDecrease() {
-    const meme = getMeme()
-    const lineIdx = meme.selectedLineIdx
-    if (meme.lines[lineIdx].size < 0) return
-    meme.lines[lineIdx].size -= 5
+    setDecrease()
     renderMeme()
-
 }
 
 function onAddLine() {
-    const meme = getMeme()
-    meme.selectedLineIdx++
-    if (meme.selectedLineIdx === 3) {
-        meme.selectedLineIdx = 0
-    }
-    const { lines, selectedLineIdx } = getMeme()
-    document.querySelector('input').value = lines[selectedLineIdx].txt
+    setAddLine()
+    document.querySelector('.text-input').value = setTextLine()
     renderMeme()
 }
 
-
+function onUpDownLine() {
+    upDownLine()
+    document.querySelector('.text-input').value = setTextLine()
+    renderMeme()
+}
 
 function resizeCanvas() {
     const elContainer = document.querySelector('.canvas-container')
@@ -206,19 +211,18 @@ function resizeCanvas() {
     gElCanvas.height = elContainer.offsetWidth
 }
 function onDeleteLine() {
-    const { selectedLineIdx, lines } = getMeme()
-    lines[selectedLineIdx].txt = ''
-    document.querySelector('input').value = lines[selectedLineIdx].txt
+    deleteLine()
+    document.querySelector('.text-input').value = ''
     renderMeme()
 }
-function inputText(ev) {
-    if (ev.keyCode === 13) return
-    const text = document.querySelector('.text-input').value
 
-    console.log(text);
+function inputText(ev) {
+    const text = document.querySelector('.text-input').value
+    if (ev.keyCode === 13) {
+        document.querySelector('.text-input').value = ''
+    }
     setLineTxt(text)
     renderMeme()
-
 }
 
 function onMyMemesPage() {
@@ -235,34 +239,31 @@ function onMyMemesPage() {
 }
 
 function onMemeSelect(id) {
-    console.log(id);
-    setGmeme(gMemes[id][1].meme)
+    const memes=getMemes()
+    setGmeme(memes[id][1].meme)
     hideMyMemesPage()
     renderMeme()
     showMeme()
 }
+
 function hideMyMemesPage() {
     document.querySelector('.my-memes').style.display = 'none'
 }
 
 function loadImageFromInput(ev, onImageReady) {
     const reader = new FileReader()
-    const meme=getMeme()
+    const meme = getMeme()
     reader.onload = function (event) {
-        let img = new Image() 
-        img.src = event.target.result 
+        let img = new Image()
+        img.src = event.target.result
         img.onload = onImageReady.bind(null, img)
-        meme.selectedImgId=img.src
+        meme.selectedImgId = img.src
     }
     reader.readAsDataURL(ev.target.files[0])
     renderMeme()
 }
+
 function onSubmit(ev) {
     ev.preventDefault()
     document.querySelector('input').value = ''
-}
-
-function _saveToStorage(val) {
-    saveToStorage(STORAGE_KEY, val)
-
 }

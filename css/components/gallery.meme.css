@@ -1,6 +1,6 @@
 .my-memes{
     display: grid;
-    grid-template-columns: minmax(auto,300px) minmax(auto,300px) minmax(auto,300px);
+    grid-template-columns: minmax(auto,300px) minmax(auto,300px) minmax(auto,300px) minmax(auto,300px);
     justify-content: center;
     gap: 5px;
     border-radius: 15px;
@@ -20,3 +20,8 @@
 .my-memes{
     display: none;
 }
+
+.my-memes img:hover {
+    opacity: 0.4;
+}
+
